@@ -16,7 +16,7 @@ export default {
     posts() {
       return this.$site.pages
         // gets the pages in the updates section, excluding any page with updatesIndex: true in the frontmatter
-        .filter(x => x.path.startsWith('/updates/') && !x.frontmatter.updatesIndex)
+        .filter(x => x.path.startsWith(this.$localePath + 'updates/') && !x.frontmatter.updatesIndex)
         // sort by newest to oldest
         .sort((a, b) => new Date(b.frontmatter.date) - new Date(a.frontmatter.date));
     }

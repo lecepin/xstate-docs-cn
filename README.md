@@ -145,13 +145,12 @@ dogService.send({ type: 'FETCH' });
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-- [可视化工具](#visualizer)
-- [为什么?](#why)
-- [有限状态机](#finite-state-machines)
-- [分层（嵌套）状态机](#hierarchical-nested-state-machines)
-- [并行状态机](#parallel-state-machines)
-- [历史状态](#history-states)
-- [赞助商](#sponsors)
+- [可视化工具](#可视化工具)
+- [为什么?](#为什么?)
+- [有限状态机](#有限状态机)
+- [分层（嵌套）状态机](#分层（嵌套）状态机)
+- [并行状态机](#并行状态机)
+- [历史状态](#历史状态)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -159,7 +158,7 @@ dogService.send({ type: 'FETCH' });
 
 **[在 XState Viz 中可视化、模拟和共享你的状态图！](https://stately.ai/viz)**
 
-<a href="https://stately.ai/viz"><img src="https://i.imgur.com/3pEB0B3.png" alt="XState Visualizer" width="300" /></a>
+<a href="https://stately.ai/viz"><img src="https://img.alicdn.com/imgextra/i4/O1CN01APqCoz1sJG7u9hmiK_!!6000000005745-2-tps-1556-914.png" alt="XState Visualizer" width="300" /></a>
 
 ## 为什么?
 
@@ -175,7 +174,7 @@ dogService.send({ type: 'FETCH' });
 
 ## 有限状态机
 
-<img src="https://imgur.com/rqqmkJh.png" alt="Light Machine" width="300" />
+<img src="https://img.alicdn.com/imgextra/i2/O1CN01lgA6Rp1muSbJPBc4X_!!6000000005014-2-tps-838-562.png" alt="Light Machine" width="300" />
 
 ```js
 import { createMachine } from 'xstate';
@@ -212,7 +211,7 @@ const nextState = lightMachine.transition(currentState, { type: 'TIMER' })
 
 ## 分层（嵌套）状态机
 
-<img src="https://imgur.com/GDZAeB9.png" alt="Hierarchical Light Machine" width="300" />
+<img src="https://img.alicdn.com/imgextra/i4/O1CN01qK25Xx1mbgMWDXUTv_!!6000000004973-2-tps-838-850.png" alt="Hierarchical Light Machine" width="300" />
 
 ```js
 import { createMachine } from 'xstate';
@@ -293,7 +292,7 @@ lightMachine.transition({ red: 'stop' }, { type: 'TIMER' }).value;
 
 ## 并行状态机
 
-<img src="https://imgur.com/GKd4HwR.png" width="300" alt="Parallel state machine" />
+<img src="https://img.alicdn.com/imgextra/i2/O1CN01wjSdKI1pqHq0Gb2sM_!!6000000005411-2-tps-956-1044.png" width="300" alt="Parallel state machine" />
 
 ```js
 import { createMachine } from 'xstate';
@@ -403,7 +402,7 @@ const nextState = wordMachine.transition(
 
 ## 历史状态
 
-<img src="https://imgur.com/I4QsQsz.png" width="300" alt="Machine with history state" />
+<img src="https://img.alicdn.com/imgextra/i1/O1CN01iRYzxF1MMP8angXwA_!!6000000001420-2-tps-926-596.png" width="300" alt="Machine with history state" />
 
 ```js
 import { createMachine } from 'xstate';
@@ -461,10 +460,3 @@ const previousState = paymentMachine.transition(reviewState, {
 
 // => { method: 'check' }
 ```
-
-## 赞助商
-
-非常感谢以下公司赞助 `xstate`。 你可以 [在 OpenCollective](https://opencollective.com/xstate) 上赞助来促进 `xstate` 开发。
-
-<a href="https://tipe.io" title="Tipe.io"><img src="https://cdn.tipe.io/tipe/tipe-logo.svg?w=240" style="background:#613DEF" /></a>
-<a href="https://webflow.com" title="Webflow"><img src="https://uploads-ssl.webflow.com/583347ca8f6c7ee058111b3b/5b03bde0971fdd75d75b5591_webflow.png" height="100" /></a>
