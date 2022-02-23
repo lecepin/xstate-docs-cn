@@ -12,7 +12,7 @@ XState 可以与 React 一起使用：
 
 ## 本地状态
 
-Using [React hooks](https://reactjs.org/hooks) are the easiest way to use state machines in your components. You can use the official [`@xstate/react`](https://github.com/statelyai/xstate/tree/main/packages/xstate-react) to give you useful hooks out of the box, such as `useMachine`.
+用 [React hooks](https://reactjs.org/hooks) 是在你的组件中使用状态机的最简单方法。 您可以使用官方的 [`@xstate/react`](https://github.com/statelyai/xstate/tree/main/packages/xstate-react) 为你提供开箱即用的 hooks，例如 `useMachine `。
 
 ```js
 import { useMachine } from '@xstate/react';
@@ -31,15 +31,15 @@ function Toggle() {
 
 ## 全局 State/React Context
 
-Our recommended approach for managing global state with XState and React is to use [React Context](https://reactjs.org/docs/context.html).
+我们推荐使用 XState 和 React 管理全局状态的方法是使用 [React Context](https://reactjs.org/docs/context.html)。
 
-> There are two versions of 'context': XState's [context](../guides/context.md) and React's context. It's a little confusing!
+> 'context' 有两个版本：XState 的 [context](../guides/context.md) 和 React 的 context。 这有点令人困惑！
 
 ### Context Provider
 
-React context can be a tricky tool to work with - if you pass in values which change too often, it can result in re-renders all the way down the tree. That means we need to pass in values which change as little as possible.
+React 上下文可能是一个很难使用的工具——如果你传入的值变化太频繁，它可能会导致整个树的重新渲染。 这意味着我们需要传递尽可能少变化的值。
 
-Luckily, XState gives us a first-class way to do that: `useInterpret`.
+幸运的是，XState 为我们提供了一个一流的方法：`useInterpret`。
 
 ```js
 import React, { createContext } from 'react';
@@ -59,13 +59,13 @@ export const GlobalStateProvider = (props) => {
 };
 ```
 
-Using `useInterpret` returns a service, which is a static reference to the running machine which can be subscribed to. This value never changes, so we don't need to worry about wasted re-renders.
+使用 `useInterpret` 返回一个服务，它是对可以订阅的正在运行的机器的静态引用。 这个值永远不会改变，所以我们不需要担心浪费的重新渲染。
 
-> For Typescript, you can create the context as `createContext({} as InterpreterFrom<typeof authMachine>);` to ensure strong typings.
+> 对于 Typescript，您可以将上下文创建为 `createContext({} as InterpreterFrom<typeof authMachine>);` 以确保强类型化。
 
 ### 利用 context
 
-Further down the tree, you can subscribe to the service like this:
+在子级，您可以像这样订阅服务：
 
 ```js
 import React, { useContext } from 'react';
@@ -80,13 +80,13 @@ export const SomeComponent = (props) => {
 };
 ```
 
-The `useActor` hook listens for whenever the service changes, and updates the state value.
+`useActor` 会监听服务何时更改，并更新状态值。
 
 ### 提升性能
 
-There's an issue with the implementation above - this will update the component for any change to the service. Tools like [Redux](https://redux.js.org) use [`selectors`](https://redux.js.org/usage/deriving-data-selectors) for deriving state. Selectors are functions which restrict which parts of the state can result in components re-rendering.
+上面的实现存在问题 - 这将更新组件以对服务进行任何更改。 [Redux](https://redux.js.org) 之类的工具使用 [`selectors`](https://redux.js.org/usage/deriving-data-selectors) 来获取状态。 选择器是限制状态的哪些部分可能导致组件重新渲染的功能。
 
-Fortunately, XState exposes the `useSelector` hook.
+幸运的是，XState 公开了 `useSelector` hook。
 
 ```js
 import React, { useContext } from 'react';
@@ -105,7 +105,7 @@ export const SomeComponent = (props) => {
 };
 ```
 
-If you need to send an event in the component that consumes a service, you can use the `service.send(...)` method directly:
+如果需要在消费服务的组件中发送事件，可以直接使用`service.send(...)`方法：
 
 ```js
 import React, { useContext } from 'react';
@@ -119,7 +119,7 @@ const loggedInSelector = (state) => {
 export const SomeComponent = (props) => {
   const globalServices = useContext(GlobalStateContext);
   const isLoggedIn = useSelector(globalServices.authService, loggedInSelector);
-  // Get `send()` method from a service
+// 从服务中获取 `send()` 方法
   const { send } = globalServices.authService;
 
   return (
@@ -134,11 +134,11 @@ export const SomeComponent = (props) => {
 };
 ```
 
-This component will only re-render when `state.matches('loggedIn')` returns a different value. This is our recommended approach over `useActor` for when you want to optimise performance.
+只有当 `state.matches('loggedIn')` 返回不同的值时，此组件才会重新渲染。 当您想要优化性能时，这是我们推荐的优于 `useActor` 的方法。
 
 ### 派发事件
 
-For dispatching events to the global store, you can call a service's `send` function directly.
+为了将事件调度到全局存储，你可以直接调用服务的`send`函数。
 
 ```js
 import React, { useContext } from 'react';
@@ -155,15 +155,15 @@ export const SomeComponent = (props) => {
 };
 ```
 
-Note that you don't need to call `useActor` for this, it's available right on the context.
+请注意，你不需要为此调用 `useActor`，它可以在上下文中使用。
 
 ## 其他 hooks
 
-XState's `useMachine` and `useInterpret` hooks can be used alongside others. Two patterns are most common:
+XState 的 `useMachine` 和 `useInterpret` hook 可以与其他 hook 一起使用。 最常见的两种模式：
 
 ### 命名的 actions/services/guards
 
-Let's imagine that when you navigate to a certain state, you want to leave the page and go somewhere else, via `react-router` or `next`. For now, we'll declare that action as a 'named' action - where we name it now and declare it later.
+让我们想象一下，当您导航到某个状态时，您想通过`react-router`或`next`离开页面并转到其他地方。 现在，我们将该动作声明为“命名”动作——我们现在命名它并稍后声明它。
 
 ```js
 import { createMachine } from 'xstate';
@@ -183,7 +183,7 @@ export const machine = createMachine({
 });
 ```
 
-Inside your component, you can now _implement_ the named action. I've added `useHistory` from `react-router` as an example, but you can imagine this working with any hook or prop-based router.
+在你的组件中，你现在可以 _实现_ 指定的动作。 我已经从 `react-router` 添加了 `useHistory` 作为示例，但是你可以想象这可以与任何基于 hook 或 prop 的路由器一起使用。
 
 ```js
 import { machine } from './machine';
@@ -205,15 +205,15 @@ const Component = () => {
 };
 ```
 
-This also works for services, guards, and delays.
+这也适合于 services, guards, 和 delays.
 
-> If you use this technique, any references you use inside `goToOtherPage` will be kept up to date each render. That means you don't need to worry about stale references.
+> 如果你使用此技术，你在 `goToOtherPage` 中使用的任何引用都将在每次渲染时保持最新。 这意味着你无需担心过时的引用。
 
 ### 使用 useEffect 同步数据
 
-Sometimes, you want to outsource some functionality to another hook. This is especially common with data fetching hooks such as [`react-query`](https://react-query.tanstack.com/) and [`swr`](https://swr.vercel.app/). You don't want to have to re-build all your data fetching functionality in XState.
+有时，你想将某些功能外包给另一个 hook。 这在诸如 [`react-query`](https://react-query.tanstack.com/) 和 [`swr`](https://swr.vercel.app/) 之类的数据获取 hook 中尤其常见。 你不想在 XState 中重新构建所有数据获取功能。
 
-The best way to manage this is via `useEffect`.
+最好的管理方法是通过`useEffect`。
 
 ```js
 const Component = () => {
@@ -231,10 +231,10 @@ const Component = () => {
 };
 ```
 
-This will send a `DATA_CHANGED` event whenever the result from `useSWR` changes, allowing you to react to it just like any other event. You could, for instance:
+每当 `useSWR` 的结果发生变化时，这将发送一个 `DATA_CHANGED` 事件，允许你像任何其他事件一样对其做出反应。 例如，你可以：
 
-- Move into an `errored` state when the data returns an error
-- Save the data to context
+- 当数据返回错误时进入`errored`状态
+- 将数据保存到上下文
 
 ## Class 组件
 
